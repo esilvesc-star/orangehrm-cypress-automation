@@ -1,0 +1,13 @@
+Feature: Cadastro de funcionário
+
+  @regression
+  @cadastro
+  Scenario: Cadastrar um novo funcionário com sucesso
+    Given que estou logado no sistema
+
+    And acesso a opção PIM pelo menu lateral
+    And acesso a opção Add Employee
+    When preencho os dados do novo funcionário
+    And clico em salvar o novo funcionário
+    Then devo visualizar o funcionário cadastrado com sucesso
+  
