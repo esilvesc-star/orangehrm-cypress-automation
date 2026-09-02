@@ -10,7 +10,8 @@ const {
 module.exports = defineConfig({
   e2e: {
     baseUrl: "https://opensource-demo.orangehrmlive.com",
-
+    video: true,
+    screenshotOnRunFailure: true,
     specPattern: "cypress/e2e/**/*.feature",
 
     async setupNodeEvents(on, config) {

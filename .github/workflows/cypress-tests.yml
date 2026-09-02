@@ -26,3 +26,13 @@ jobs:
 
       - name: Executar testes Cypress
         run: npx cypress run
+
+      - name: Upload de evidências
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+            name: cypress-evidencias
+            path: |
+                cypress/screenshots
+                cypress/videos
+            if-no-files-found: ignore  
