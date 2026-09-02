@@ -5,7 +5,7 @@ class LoginPage {
   }
 
   preencherUsuario(usuario) {
-    cy.get('input[name="usernami"]').type(usuario)
+    cy.get('input[name="username"]').type(usuario)
   }
 
   preencherSenha(senha) {
