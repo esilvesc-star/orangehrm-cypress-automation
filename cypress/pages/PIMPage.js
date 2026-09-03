@@ -14,11 +14,23 @@ class PIMPage {
     cy.contains('h6', 'Add Employee').should('be.visible')
   }
 
+  validarListaDeFuncionários() {
+    cy.url().should('include', '/pim/viewEmployeeList')
+    cy.contains('h5', 'Employee Information').should('be.visible')
+  }
+
   preencherNomeFuncionario(nome, nomeMeio, sobrenome) {
     cy.get('input[name="firstName"]').type(nome)
     cy.get('input[name="middleName"]').type(nomeMeio)
     cy.get('input[name="lastName"]').type(sobrenome)
   }
+
+  capturarEmployeeId() {
+   return cy.contains('label', 'Employee Id')
+    .parents('.oxd-input-group')
+    .find('input')
+    .invoke('val')
+}
 
   clicarSalvarFuncionario() {
     cy.contains('button', 'Save').click()
@@ -27,6 +39,54 @@ class PIMPage {
   validarFuncionarioCadastrado(nomeCompleto) {
     cy.url().should('include', '/pim/viewPersonalDetails')
     cy.contains(nomeCompleto).should('be.visible')
+}
+
+  // Cadastro
+
+preencherNomeFuncionario(nome, nomeMeio, sobrenome) {
+    cy.get('input[name="firstName"]').type(nome)
+    cy.get('input[name="middleName"]').type(nomeMeio)
+    cy.get('input[name="lastName"]').type(sobrenome)
+}
+
+capturarEmployeeId() {
+    return cy.contains('label', 'Employee Id')
+        .parents('.oxd-input-group')
+        .find('input')
+        .invoke('val')
+}
+
+clicarSalvarFuncionario() {
+    cy.contains('button', 'Save').click()
+}
+
+validarFuncionarioCadastrado(nomeCompleto) {
+    cy.url().should('include', '/pim/viewPersonalDetails')
+    cy.contains(nomeCompleto).should('be.visible')
+}
+
+
+// Busca por ID
+
+acessarListaFuncionarios() {
+    cy.contains('a', 'Employee List').click()
+    cy.url().should('include', '/pim/viewEmployeeList')
+    cy.contains('h5', 'Employee Information').should('be.visible')
+}
+
+pesquisarFuncionarioPorId(id) {
+    cy.contains('label', 'Employee Id')
+        .parents('.oxd-input-group')
+        .find('input')
+        .type(id)
+
+    cy.contains('button', 'Search').click()
+}
+
+validarFuncionarioPorId(id) {
+    cy.get('.oxd-table-body')
+        .contains(id)
+        .should('be.visible')
 }
 
 }

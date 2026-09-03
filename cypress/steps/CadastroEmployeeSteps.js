@@ -6,6 +6,7 @@ import {
 import PIMPage from '../pages/PIMPage'
 
 let employeeData
+let employeeId
 
 before(() => {
   cy.fixture('cadastroEmployees').then((dados) => {
@@ -13,6 +14,7 @@ before(() => {
   })
 })
 
+// Cadastro de funcionário
 When('acesso a opção Add Employee', () => {
   PIMPage.clicarAddEmployee()
 })
@@ -25,6 +27,12 @@ When('preencho os dados do novo funcionário', () => {
   )
 })
 
+When('armazeno o ID gerado para o funcionário', () => {
+  PIMPage.capturarEmployeeId().then((id) => {
+    employeeId = id
+  })
+})
+
 When('clico em salvar o novo funcionário', () => {
     PIMPage.clicarSalvarFuncionario()
 })
@@ -32,4 +40,18 @@ When('clico em salvar o novo funcionário', () => {
 Then('devo visualizar o funcionário cadastrado com sucesso', () => {
         const nomeCompleto = `${employeeData.funcionarioValido.firstName} ${employeeData.funcionarioValido.lastName}`
         PIMPage.validarFuncionarioCadastrado(nomeCompleto)
+})
+
+// Busca de funcionário
+
+When('acesso a lista de funcionários', () => {
+    PIMPage.acessarListaFuncionarios()
+})
+
+When('pesquiso o funcionário pelo ID gerado', () => {
+    PIMPage.pesquisarFuncionarioPorId(employeeId)
+})
+
+Then('o funcionário deve ser apresentado na lista de resultados', () => {
+    PIMPage.validarFuncionarioPorId(employeeId)
 })
