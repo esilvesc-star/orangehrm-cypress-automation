@@ -1,7 +1,12 @@
-{
+  {
   "funcionarioValido": {
     "firstName": "Eloi",
     "middleName": "Teste",
     "lastName": "Automacao"
+  },
+
+  "funcionarioNomeAcimaLimite": {
+    "firstName": "1234567890123456789012345678901",
+    "lastName": "1234567890123456789012345678901"
   }
 }

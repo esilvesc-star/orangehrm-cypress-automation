@@ -1,12 +1,12 @@
 class PIMPage {
 
+  // ========================================
+  // Validações de páginas
+  // ========================================
+
   validarPaginaPIM() {
     cy.url().should('include', '/pim')
     cy.contains('h6', 'PIM').should('be.visible')
-  }
-
-  clicarAddEmployee() {
-    cy.contains('a', 'Add Employee').click()
   }
 
   validarPaginaAddEmployee() {
@@ -14,23 +14,47 @@ class PIMPage {
     cy.contains('h6', 'Add Employee').should('be.visible')
   }
 
-  validarListaDeFuncionários() {
+  validarListaDeFuncionarios() {
     cy.url().should('include', '/pim/viewEmployeeList')
     cy.contains('h5', 'Employee Information').should('be.visible')
   }
 
-  preencherNomeFuncionario(nome, nomeMeio, sobrenome) {
+
+  // ========================================
+  // Navegação
+  // ========================================
+
+  clicarAddEmployee() {
+    cy.contains('a', 'Add Employee').click()
+  }
+
+  acessarListaFuncionarios() {
+    cy.contains('a', 'Employee List').click()
+    this.validarListaDeFuncionarios()
+  }
+
+
+  // ========================================
+  // Cadastro de funcionário
+  // ========================================
+
+  preencherNomeFuncionario(nome, sobrenome) {
+    cy.get('input[name="firstName"]').type(nome)
+    cy.get('input[name="lastName"]').type(sobrenome)
+  }
+
+  preencherNomeFuncionarioCompleto(nome, nomeMeio, sobrenome) {
     cy.get('input[name="firstName"]').type(nome)
     cy.get('input[name="middleName"]').type(nomeMeio)
     cy.get('input[name="lastName"]').type(sobrenome)
   }
 
   capturarEmployeeId() {
-   return cy.contains('label', 'Employee Id')
-    .parents('.oxd-input-group')
-    .find('input')
-    .invoke('val')
-}
+    return cy.contains('label', 'Employee Id')
+      .parents('.oxd-input-group')
+      .find('input')
+      .invoke('val')
+  }
 
   clicarSalvarFuncionario() {
     cy.contains('button', 'Save').click()
@@ -39,68 +63,44 @@ class PIMPage {
   validarFuncionarioCadastrado(nomeCompleto) {
     cy.url().should('include', '/pim/viewPersonalDetails')
     cy.contains(nomeCompleto).should('be.visible')
-}
+  }
 
-  // Cadastro
 
-preencherNomeFuncionario(nome, nomeMeio, sobrenome) {
-    cy.get('input[name="firstName"]').type(nome)
-    cy.get('input[name="middleName"]').type(nomeMeio)
-    cy.get('input[name="lastName"]').type(sobrenome)
-}
+  // ========================================
+  // Validações do cadastro
+  // ========================================
 
-capturarEmployeeId() {
-    return cy.contains('label', 'Employee Id')
-        .parents('.oxd-input-group')
-        .find('input')
-        .invoke('val')
-}
+  validarCamposObrigatorios() {
+    cy.get('input[name="firstName"]')
+      .parents('.oxd-input-group')
+      .contains('Required')
+      .should('be.visible')
 
-clicarSalvarFuncionario() {
-    cy.contains('button', 'Save').click()
-}
+    cy.get('input[name="lastName"]')
+      .parents('.oxd-input-group')
+      .contains('Required')
+      .should('be.visible')
+  }
 
-validarFuncionarioCadastrado(nomeCompleto) {
-    cy.url().should('include', '/pim/viewPersonalDetails')
-    cy.contains(nomeCompleto).should('be.visible')
-}
 
-// Busca por ID
+  // ========================================
+  // Pesquisa de funcionário
+  // ========================================
 
-acessarListaFuncionarios() {
-    cy.contains('a', 'Employee List').click()
-    cy.url().should('include', '/pim/viewEmployeeList')
-    cy.contains('h5', 'Employee Information').should('be.visible')
-}
-
-pesquisarFuncionarioPorId(id) {
+  pesquisarFuncionarioPorId(id) {
     cy.contains('label', 'Employee Id')
-        .parents('.oxd-input-group')
-        .find('input')
-        .type(id)
+      .parents('.oxd-input-group')
+      .find('input')
+      .type(id)
 
     cy.contains('button', 'Search').click()
-}
+  }
 
-validarFuncionarioPorId(id) {
+  validarFuncionarioPorId(id) {
     cy.get('.oxd-table-body')
-        .contains(id)
-        .should('be.visible')
-}
-
-//Validar campos obrigatórios no cadastro de funcionário
-validarCamposObrigatorios() {
-
-  cy.get('input[name="firstName"]')
-    .parents('.oxd-input-group')
-    .contains('Required')
-    .should('be.visible')
-
-  cy.get('input[name="lastName"]')
-    .parents('.oxd-input-group')
-    .contains('Required')
-    .should('be.visible')
-}
+      .contains(id)
+      .should('be.visible')
+  }
 
 }
 
