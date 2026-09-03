@@ -65,7 +65,6 @@ validarFuncionarioCadastrado(nomeCompleto) {
     cy.contains(nomeCompleto).should('be.visible')
 }
 
-
 // Busca por ID
 
 acessarListaFuncionarios() {
@@ -87,6 +86,20 @@ validarFuncionarioPorId(id) {
     cy.get('.oxd-table-body')
         .contains(id)
         .should('be.visible')
+}
+
+//Validar campos obrigatórios no cadastro de funcionário
+validarCamposObrigatorios() {
+
+  cy.get('input[name="firstName"]')
+    .parents('.oxd-input-group')
+    .contains('Required')
+    .should('be.visible')
+
+  cy.get('input[name="lastName"]')
+    .parents('.oxd-input-group')
+    .contains('Required')
+    .should('be.visible')
 }
 
 }

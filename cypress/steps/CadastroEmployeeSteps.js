@@ -14,6 +14,16 @@ before(() => {
   })
 })
 
+// Cadastro campos obrigatórios
+When('tento salvar o funcionário sem preencher os campos obrigatórios', () => {
+  PIMPage.clicarSalvarFuncionario()
+})
+
+Then('devo visualizar a obrigatoriedade dos campos First Name e Last Name', () => {
+  PIMPage.validarCamposObrigatorios()
+})
+
+
 // Cadastro de funcionário
 When('acesso a opção Add Employee', () => {
   PIMPage.clicarAddEmployee()

@@ -1,8 +1,26 @@
-Feature: Cadastro de funcionário
+Feature: Gerenciamento de funcionários
 
 
-  @only
-Scenario: Cadastrar e buscar funcionário pelo ID
+  @cadastro @negative @only
+  Scenario: Validar campos obrigatórios no cadastro de funcionário
+    Given que estou logado no sistema
+    And acesso a opção PIM pelo menu lateral
+    And acesso a opção Add Employee
+    When tento salvar o funcionário sem preencher os campos obrigatórios
+    Then devo visualizar a obrigatoriedade dos campos First Name e Last Name
+
+  @cadastro @regression
+  Scenario: Cadastrar um novo funcionário com sucesso
+    Given que estou logado no sistema
+    And acesso a opção PIM pelo menu lateral
+    And acesso a opção Add Employee
+    When preencho os dados do novo funcionário
+    And clico em salvar o novo funcionário
+    Then devo visualizar o funcionário cadastrado com sucesso
+
+
+  @e2e @regression
+  Scenario: Cadastrar e buscar funcionário pelo ID
     Given que estou logado no sistema
     And acesso a opção PIM pelo menu lateral
     And acesso a opção Add Employee
