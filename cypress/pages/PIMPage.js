@@ -49,6 +49,11 @@ class PIMPage {
     cy.get('input[name="lastName"]').type(sobrenome)
   }
 
+  preencherNomeFuncionarioAcimaDoLimite(nome, sobrenome) {
+    cy.get('input[name="firstName"]').type(nome)
+    cy.get('input[name="lastName"]').type(sobrenome)
+  }
+
   capturarEmployeeId() {
     return cy.contains('label', 'Employee Id')
       .parents('.oxd-input-group')
@@ -82,6 +87,17 @@ class PIMPage {
       .should('be.visible')
   }
 
+  validarLimiteDeCaracteres() {
+    cy.get('input[name="firstName"]')
+      .parents('.oxd-input-group')
+      .contains('Should not exceed 30 characters')
+      .should('be.visible')
+
+    cy.get('input[name="lastName"]')
+      .parents('.oxd-input-group')
+      .contains('Should not exceed 30 characters')
+      .should('be.visible')
+  }
 
   // ========================================
   // Pesquisa de funcionário

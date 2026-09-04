@@ -47,6 +47,13 @@ When('preencho os dados do novo funcionário completo', () => {
   )
 })
 
+When('preencho nome e sobrenome acima do limite permitido', () => {
+  PIMPage.preencherNomeFuncionarioAcimaDoLimite(
+    employeeData.funcionarioAcimaDoLimite.firstName,
+    employeeData.funcionarioAcimaDoLimite.lastName
+  )
+})
+
 When('armazeno o ID gerado para o funcionário', () => {
   PIMPage.capturarEmployeeId().then((id) => {
     employeeId = id
@@ -74,6 +81,10 @@ When('tento salvar o funcionário sem preencher os campos obrigatórios', () => 
 
 Then('devo visualizar a obrigatoriedade dos campos First Name e Last Name', () => {
   PIMPage.validarCamposObrigatorios()
+})
+
+Then('devo visualizar a mensagem de limite de 30 caracteres', () => {
+  PIMPage.validarLimiteDeCaracteres()
 })
 
 
