@@ -1,6 +1,6 @@
 Feature: Gerenciamento de funcionários
 
-@cadastro @regression 
+@cadastro @regression @only
   Scenario: Cadastrar um novo funcionário com sucesso
     Given que estou logado no sistema
     And acesso a opção PIM pelo menu lateral
@@ -25,7 +25,7 @@ Feature: Gerenciamento de funcionários
     When preencho nome e sobrenome acima do limite permitido
     Then devo visualizar a mensagem de limite de 30 caracteres
 
-@cadastro @negative @only
+@cadastro @negative
 Scenario: Validar limite de caracteres no Employee ID
   Given que estou logado no sistema
   And acesso a opção PIM pelo menu lateral

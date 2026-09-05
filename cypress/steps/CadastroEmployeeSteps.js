@@ -21,6 +21,7 @@ before(() => {
 
 When('acesso a opção Add Employee', () => {
   PIMPage.clicarAddEmployee()
+  PIMPage.validarPaginaAddEmployee()
 })
 
 When('acesso a lista de funcionários', () => {
