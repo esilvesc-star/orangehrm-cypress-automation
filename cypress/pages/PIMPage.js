@@ -54,6 +54,14 @@ class PIMPage {
     cy.get('input[name="lastName"]').type(sobrenome)
   }
 
+  preencherEmployeeIdAcimaDoLimite(employeeId) {
+  cy.contains('label', 'Employee Id')
+    .parents('.oxd-input-group')
+    .find('input')
+    .clear()
+    .type(employeeId)
+}
+
   capturarEmployeeId() {
     return cy.contains('label', 'Employee Id')
       .parents('.oxd-input-group')
@@ -96,6 +104,13 @@ class PIMPage {
     cy.get('input[name="lastName"]')
       .parents('.oxd-input-group')
       .contains('Should not exceed 30 characters')
+      .should('be.visible')
+  }
+
+  validarLimiteDeCaracteresEmployeeId() {
+    cy.contains('label', 'Employee Id')
+      .parents('.oxd-input-group')
+      .contains('Should not exceed 10 characters')
       .should('be.visible')
   }
 

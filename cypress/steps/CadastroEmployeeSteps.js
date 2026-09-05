@@ -54,6 +54,12 @@ When('preencho nome e sobrenome acima do limite permitido', () => {
   )
 })
 
+When('informo um Employee ID acima do limite permitido', () => {
+  PIMPage.preencherEmployeeIdAcimaDoLimite(
+    employeeData.idAcimaDoLimite.employeeId
+  )
+})
+
 When('armazeno o ID gerado para o funcionário', () => {
   PIMPage.capturarEmployeeId().then((id) => {
     employeeId = id
@@ -85,6 +91,10 @@ Then('devo visualizar a obrigatoriedade dos campos First Name e Last Name', () =
 
 Then('devo visualizar a mensagem de limite de 30 caracteres', () => {
   PIMPage.validarLimiteDeCaracteres()
+})
+
+Then('devo visualizar a mensagem de limite de 10 caracteres no Employee ID', () => {
+  PIMPage.validarLimiteDeCaracteresEmployeeId()
 })
 
 
