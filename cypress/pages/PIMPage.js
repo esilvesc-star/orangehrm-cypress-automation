@@ -70,14 +70,26 @@ class PIMPage {
   }
 
   clicarSalvarFuncionario() {
-    cy.contains('button', 'Save').click()
-  }
+  cy.intercept('POST', '**/api/v2/pim/employees')
+    .as('cadastrarFuncionario')
 
-  validarFuncionarioCadastrado(nomeCompleto) {
-    cy.url().should('include', '/pim/viewPersonalDetails')
-    cy.contains(nomeCompleto).should('be.visible')
-  }
+  cy.contains('button', 'Save').click()
 
+  cy.wait('@cadastrarFuncionario')
+    .its('response.statusCode')
+    .should('eq', 200)
+}
+
+validarFuncionarioCadastrado(nomeCompleto) {
+  cy.url({ timeout: 15000 })
+    .should('include', '/pim/viewPersonalDetails')
+
+  cy.contains('h6', 'Personal Details', { timeout: 15000 })
+    .should('be.visible')
+
+  cy.contains(nomeCompleto, { timeout: 15000 })
+    .should('be.visible')
+}
 
   // ========================================
   // Validações do cadastro
