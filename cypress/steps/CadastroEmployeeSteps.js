@@ -68,7 +68,7 @@ When('armazeno o ID gerado para o funcionário', () => {
 })
 
 When('clico em salvar o novo funcionário', () => {
-  PIMPage.clicarSalvarFuncionario()
+  PIMPage.salvarFuncionarioComSucesso()
 })
 
 Then('devo visualizar o funcionário cadastrado com sucesso', () => {

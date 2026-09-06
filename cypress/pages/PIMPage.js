@@ -55,12 +55,12 @@ class PIMPage {
   }
 
   preencherEmployeeIdAcimaDoLimite(employeeId) {
-  cy.contains('label', 'Employee Id')
-    .parents('.oxd-input-group')
-    .find('input')
-    .clear()
-    .type(employeeId)
-}
+    cy.contains('label', 'Employee Id')
+      .parents('.oxd-input-group')
+      .find('input')
+      .clear()
+      .type(employeeId)
+  }
 
   capturarEmployeeId() {
     return cy.contains('label', 'Employee Id')
@@ -70,26 +70,30 @@ class PIMPage {
   }
 
   clicarSalvarFuncionario() {
-  cy.intercept('POST', '**/api/v2/pim/employees')
-    .as('cadastrarFuncionario')
+    cy.contains('button', 'Save').click()
+  }
 
-  cy.contains('button', 'Save').click()
+  salvarFuncionarioComSucesso() {
+    cy.intercept('POST', '**/api/v2/pim/employees')
+      .as('cadastrarFuncionario')
 
-  cy.wait('@cadastrarFuncionario')
-    .its('response.statusCode')
-    .should('eq', 200)
-}
+    this.clicarSalvarFuncionario()
 
-validarFuncionarioCadastrado(nomeCompleto) {
-  cy.url({ timeout: 15000 })
-    .should('include', '/pim/viewPersonalDetails')
+    cy.wait('@cadastrarFuncionario')
+      .its('response.statusCode')
+      .should('eq', 200)
+  }
 
-  cy.contains('h6', 'Personal Details', { timeout: 15000 })
-    .should('be.visible')
+  validarFuncionarioCadastrado(nomeCompleto) {
+    cy.url({ timeout: 15000 })
+      .should('include', '/pim/viewPersonalDetails')
 
-  cy.contains(nomeCompleto, { timeout: 15000 })
-    .should('be.visible')
-}
+    cy.contains('h6', 'Personal Details', { timeout: 15000 })
+      .should('be.visible')
+
+    cy.contains(nomeCompleto, { timeout: 15000 })
+      .should('be.visible')
+  }
 
   // ========================================
   // Validações do cadastro
