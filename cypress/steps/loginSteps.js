@@ -1,8 +1,4 @@
-import {
-  Given,
-  When,
-  Then
-} from '@badeball/cypress-cucumber-preprocessor'
+import { Given, When, Then } from '@badeball/cypress-cucumber-preprocessor'
 
 import LoginPage from '../pages/LoginPage'
 import DashboardPage from '../pages/DashboardPage'

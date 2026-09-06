@@ -1,5 +1,4 @@
 class MenuLateral {
-
   clicarAdmin() {
     cy.contains('a', 'Admin').click()
   }
@@ -22,7 +21,7 @@ class MenuLateral {
 
   clicarMyInfo() {
     cy.contains('a', 'My Info').click()
-  }           
+  }
 
   clicarPerformance() {
     cy.contains('a', 'Performance').click()
@@ -47,7 +46,6 @@ class MenuLateral {
   clicarBuzz() {
     cy.contains('a', 'Buzz').click()
   }
-
 }
 
 export default new MenuLateral()

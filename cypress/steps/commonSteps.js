@@ -1,6 +1,4 @@
-import {
-  Given
-} from '@badeball/cypress-cucumber-preprocessor'
+import { Given } from '@badeball/cypress-cucumber-preprocessor'
 
 import LoginPage from '../pages/LoginPage'
 import DashboardPage from '../pages/DashboardPage'

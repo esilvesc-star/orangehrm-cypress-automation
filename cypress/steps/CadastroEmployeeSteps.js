@@ -1,7 +1,4 @@
-import {
-  When,
-  Then
-} from '@badeball/cypress-cucumber-preprocessor'
+import { When, Then } from '@badeball/cypress-cucumber-preprocessor'
 
 import PIMPage from '../pages/PIMPage'
 
@@ -13,7 +10,6 @@ before(() => {
     employeeData = dados
   })
 })
-
 
 // ========================================
 // Navegação
@@ -27,7 +23,6 @@ When('acesso a opção Add Employee', () => {
 When('acesso a lista de funcionários', () => {
   PIMPage.acessarListaFuncionarios()
 })
-
 
 // ========================================
 // Cadastro de funcionário
@@ -77,7 +72,6 @@ Then('devo visualizar o funcionário cadastrado com sucesso', () => {
   PIMPage.validarFuncionarioCadastrado(nomeCompleto)
 })
 
-
 // ========================================
 // Validações do cadastro
 // ========================================
@@ -86,18 +80,23 @@ When('tento salvar o funcionário sem preencher os campos obrigatórios', () => 
   PIMPage.clicarSalvarFuncionario()
 })
 
-Then('devo visualizar a obrigatoriedade dos campos First Name e Last Name', () => {
-  PIMPage.validarCamposObrigatorios()
-})
+Then(
+  'devo visualizar a obrigatoriedade dos campos First Name e Last Name',
+  () => {
+    PIMPage.validarCamposObrigatorios()
+  }
+)
 
 Then('devo visualizar a mensagem de limite de 30 caracteres', () => {
   PIMPage.validarLimiteDeCaracteres()
 })
 
-Then('devo visualizar a mensagem de limite de 10 caracteres no Employee ID', () => {
-  PIMPage.validarLimiteDeCaracteresEmployeeId()
-})
-
+Then(
+  'devo visualizar a mensagem de limite de 10 caracteres no Employee ID',
+  () => {
+    PIMPage.validarLimiteDeCaracteresEmployeeId()
+  }
+)
 
 // ========================================
 // Pesquisa de funcionário

@@ -1,5 +1,4 @@
 class PIMPage {
-
   // ========================================
   // Validações de páginas
   // ========================================
@@ -19,7 +18,6 @@ class PIMPage {
     cy.contains('h5', 'Employee Information').should('be.visible')
   }
 
-
   // ========================================
   // Navegação
   // ========================================
@@ -32,7 +30,6 @@ class PIMPage {
     cy.contains('a', 'Employee List').click()
     this.validarListaDeFuncionarios()
   }
-
 
   // ========================================
   // Cadastro de funcionário
@@ -63,7 +60,8 @@ class PIMPage {
   }
 
   capturarEmployeeId() {
-    return cy.contains('label', 'Employee Id')
+    return cy
+      .contains('label', 'Employee Id')
       .parents('.oxd-input-group')
       .find('input')
       .invoke('val')
@@ -74,8 +72,7 @@ class PIMPage {
   }
 
   salvarFuncionarioComSucesso() {
-    cy.intercept('POST', '**/api/v2/pim/employees')
-      .as('cadastrarFuncionario')
+    cy.intercept('POST', '**/api/v2/pim/employees').as('cadastrarFuncionario')
 
     this.clicarSalvarFuncionario()
 
@@ -85,14 +82,13 @@ class PIMPage {
   }
 
   validarFuncionarioCadastrado(nomeCompleto) {
-    cy.url({ timeout: 15000 })
-      .should('include', '/pim/viewPersonalDetails')
+    cy.url({ timeout: 15000 }).should('include', '/pim/viewPersonalDetails')
 
-    cy.contains('h6', 'Personal Details', { timeout: 15000 })
-      .should('be.visible')
+    cy.contains('h6', 'Personal Details', { timeout: 15000 }).should(
+      'be.visible'
+    )
 
-    cy.contains(nomeCompleto, { timeout: 15000 })
-      .should('be.visible')
+    cy.contains(nomeCompleto, { timeout: 15000 }).should('be.visible')
   }
 
   // ========================================
@@ -144,11 +140,8 @@ class PIMPage {
   }
 
   validarFuncionarioPorId(id) {
-    cy.get('.oxd-table-body')
-      .contains(id)
-      .should('be.visible')
+    cy.get('.oxd-table-body').contains(id).should('be.visible')
   }
-
 }
 
 export default new PIMPage()

@@ -4,14 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-  "cy:open": "cypress open",
-  "test": "cypress run",
-  "test:smoke": "cypress run --expose tags=@smoke",
-  "test:regression": "cypress run --expose tags=@regression",
-  "test:login": "cypress run --expose tags=@login",
-  "test:menu": "cypress run --expose tags=@menu",
-  "test:pim": "cypress run --expose tags=@pim"
-},
+    "cy:open": "cypress open",
+    "test": "cypress run",
+    "test:smoke": "cypress run --expose tags=@smoke",
+    "test:regression": "cypress run --expose tags=@regression",
+    "test:login": "cypress run --expose tags=@login",
+    "test:menu": "cypress run --expose tags=@menu",
+    "test:pim": "cypress run --expose tags=@pim",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -20,6 +22,7 @@
     "@badeball/cypress-cucumber-preprocessor": "^27.0.0",
     "@bahmutov/cypress-esbuild-preprocessor": "^2.2.8",
     "cypress": "^15.21.0",
-    "esbuild": "^0.28.2"
+    "esbuild": "^0.28.2",
+    "prettier": "3.9.6"
   }
 }

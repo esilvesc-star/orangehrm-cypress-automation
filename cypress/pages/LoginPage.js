@@ -1,5 +1,4 @@
 class LoginPage {
-
   acessarPaginaLogin() {
     cy.visit('/web/index.php/auth/login')
   }
@@ -23,7 +22,6 @@ class LoginPage {
   validarMensagemErro(mensagem) {
     cy.contains(mensagem).should('be.visible')
   }
-
 }
 
 export default new LoginPage()

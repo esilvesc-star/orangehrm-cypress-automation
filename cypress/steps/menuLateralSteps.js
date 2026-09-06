@@ -1,8 +1,4 @@
-import {
-  Given,
-  When,
-  Then
-} from '@badeball/cypress-cucumber-preprocessor'
+import { Given, When, Then } from '@badeball/cypress-cucumber-preprocessor'
 
 import DashboardPage from '../pages/DashboardPage'
 import MenuLateral from '../components/MenuLateral'
@@ -16,17 +12,17 @@ import PerformancePage from '../pages/PerformancePage'
 import DirectoryPage from '../pages/DirectoryPage'
 import MaintenancePage from '../pages/MaintenancePage'
 import ClaimPage from '../pages/ClaimPage'
-import BuzzPage from '../pages/BuzzPage'  
+import BuzzPage from '../pages/BuzzPage'
 
 // Menu Admin
 
 When('acesso a opção Admin pelo menu lateral', () => {
   MenuLateral.clicarAdmin()
-})  
+})
 
 Then('devo visualizar a página Admin', () => {
   AdminPage.validarPaginaAdmin()
-})  
+})
 
 // Menu PIM
 
@@ -35,8 +31,8 @@ When('acesso a opção PIM pelo menu lateral', () => {
 })
 
 Then('devo visualizar a página PIM', () => {
-    PIMPage.validarPaginaPIM()
-})   
+  PIMPage.validarPaginaPIM()
+})
 
 // Menu Leave
 
@@ -118,7 +114,7 @@ Then('devo visualizar a página Maintenance', () => {
   MaintenancePage.validarMaintenance()
 })
 
-// Menu Claim 
+// Menu Claim
 
 When('acesso a opção Claim pelo menu lateral', () => {
   MenuLateral.clicarClaim()
@@ -126,14 +122,14 @@ When('acesso a opção Claim pelo menu lateral', () => {
 
 Then('devo visualizar a página Claim', () => {
   ClaimPage.validarClaim()
-})  
+})
 
 // Menu Buzz
 
 When('acesso a opção Buzz pelo menu lateral', () => {
   MenuLateral.clicarBuzz()
-})      
+})
 
 Then('devo visualizar a página Buzz', () => {
   BuzzPage.validarBuzz()
-})  
+})
