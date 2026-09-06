@@ -4,8 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "cy:open": "cypress open",
+  "test": "cypress run",
+  "test:smoke": "cypress run --expose tags=@smoke",
+  "test:regression": "cypress run --expose tags=@regression",
+  "test:login": "cypress run --expose tags=@login",
+  "test:menu": "cypress run --expose tags=@menu",
+  "test:pim": "cypress run --expose tags=@pim"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",
