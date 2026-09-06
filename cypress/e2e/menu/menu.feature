@@ -1,22 +1,25 @@
+@menu
 Feature: Navegação pelo menu lateral
+  
   @regression
   Scenario: Acessar a página Admin pelo menu lateral
     Given que estou logado no sistema
     When acesso a opção Admin pelo menu lateral
     Then devo visualizar a página Admin
+  
   @regression
   Scenario: Acessar a página PIM pelo menu lateral
     Given que estou logado no sistema
     When acesso a opção PIM pelo menu lateral
     Then devo visualizar a página PIM
-
+  
   @regression
   Scenario: Acessar a página Leave pelo menu lateral
     Given que estou logado no sistema
     When acesso a opção Leave pelo menu lateral
     Then devo visualizar a página Leave
 
-  @regression     
+  @regression
   Scenario: Acessar a página Time pelo menu lateral
     Given que estou logado no sistema
     When acesso a opção Time pelo menu lateral
