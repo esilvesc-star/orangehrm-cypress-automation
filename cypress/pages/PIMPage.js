@@ -35,20 +35,16 @@ class PIMPage {
   // Cadastro de funcionário
   // ========================================
 
-  preencherNomeFuncionario(nome, sobrenome) {
-    cy.get('input[name="firstName"]').type(nome)
-    cy.get('input[name="lastName"]').type(sobrenome)
-  }
+  preencherDadosFuncionario({ firstName, middleName = '', lastName }) {
+    cy.get('input[name="firstName"]').clear().type(firstName)
 
-  preencherNomeFuncionarioCompleto(nome, nomeMeio, sobrenome) {
-    cy.get('input[name="firstName"]').type(nome)
-    cy.get('input[name="middleName"]').type(nomeMeio)
-    cy.get('input[name="lastName"]').type(sobrenome)
-  }
+    cy.get('input[name="middleName"]').clear()
 
-  preencherNomeFuncionarioAcimaDoLimite(nome, sobrenome) {
-    cy.get('input[name="firstName"]').type(nome)
-    cy.get('input[name="lastName"]').type(sobrenome)
+    if (middleName) {
+      cy.get('input[name="middleName"]').type(middleName)
+    }
+
+    cy.get('input[name="lastName"]').clear().type(lastName)
   }
 
   preencherEmployeeIdAcimaDoLimite(employeeId) {

@@ -32,27 +32,19 @@ When('acesso a lista de funcionários', () => {
 // ========================================
 
 When('preencho os dados do novo funcionário', () => {
-  PIMPage.preencherNomeFuncionario(
-    employeeData.funcionarioValido.firstName,
-    employeeData.funcionarioValido.lastName
-  )
+  const { firstName, lastName } = employeeData.funcionarioValido
+
+  PIMPage.preencherDadosFuncionario({ firstName, lastName })
   PIMPage.preencherEmployeeId(gerarEmployeeId())
 })
 
 When('preencho os dados do novo funcionário completo', () => {
-  PIMPage.preencherNomeFuncionarioCompleto(
-    employeeData.funcionarioValido.firstName,
-    employeeData.funcionarioValido.middleName,
-    employeeData.funcionarioValido.lastName
-  )
+  PIMPage.preencherDadosFuncionario(employeeData.funcionarioValido)
   PIMPage.preencherEmployeeId(gerarEmployeeId())
 })
 
 When('preencho nome e sobrenome acima do limite permitido', () => {
-  PIMPage.preencherNomeFuncionarioAcimaDoLimite(
-    employeeData.funcionarioAcimaDoLimite.firstName,
-    employeeData.funcionarioAcimaDoLimite.lastName
-  )
+  PIMPage.preencherDadosFuncionario(employeeData.funcionarioAcimaDoLimite)
 })
 
 When('informo um Employee ID acima do limite permitido', () => {
