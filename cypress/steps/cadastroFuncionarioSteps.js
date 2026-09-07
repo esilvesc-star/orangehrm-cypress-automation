@@ -1,12 +1,15 @@
 import { When, Then } from '@badeball/cypress-cucumber-preprocessor'
-
 import PIMPage from '../pages/PIMPage'
+
+function gerarEmployeeId() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2, 4)
+}
 
 let employeeData
 let employeeId
 
 before(() => {
-  cy.fixture('cadastroEmployees').then((dados) => {
+  cy.fixture('funcionarios.json').then((dados) => {
     employeeData = dados
   })
 })
@@ -33,6 +36,7 @@ When('preencho os dados do novo funcionário', () => {
     employeeData.funcionarioValido.firstName,
     employeeData.funcionarioValido.lastName
   )
+  PIMPage.preencherEmployeeId(gerarEmployeeId())
 })
 
 When('preencho os dados do novo funcionário completo', () => {
@@ -41,6 +45,7 @@ When('preencho os dados do novo funcionário completo', () => {
     employeeData.funcionarioValido.middleName,
     employeeData.funcionarioValido.lastName
   )
+  PIMPage.preencherEmployeeId(gerarEmployeeId())
 })
 
 When('preencho nome e sobrenome acima do limite permitido', () => {

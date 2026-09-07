@@ -59,6 +59,15 @@ class PIMPage {
       .type(employeeId)
   }
 
+  preencherEmployeeId(employeeId) {
+    cy.contains('label', 'Employee Id')
+      .parents('.oxd-input-group')
+      .find('input')
+      .clear()
+      .type(employeeId)
+      .blur()
+  }
+
   capturarEmployeeId() {
     return cy
       .contains('label', 'Employee Id')
