@@ -1,7 +1,7 @@
-import { Given, When, Then } from '@badeball/cypress-cucumber-preprocessor'
+import { When, Then } from '@badeball/cypress-cucumber-preprocessor'
 
-import DashboardPage from '../pages/DashboardPage'
 import MenuLateral from '../components/MenuLateral'
+import DashboardPage from '../pages/DashboardPage'
 import AdminPage from '../pages/AdminPage'
 import PIMPage from '../pages/PIMPage'
 import LeavePage from '../pages/LeavePage'
@@ -15,9 +15,8 @@ import ClaimPage from '../pages/ClaimPage'
 import BuzzPage from '../pages/BuzzPage'
 
 // Menu Admin
-
 When('acesso a opção Admin pelo menu lateral', () => {
-  MenuLateral.clicarAdmin()
+  MenuLateral.acessarOpcao('Admin')
 })
 
 Then('devo visualizar a página Admin', () => {
@@ -25,9 +24,8 @@ Then('devo visualizar a página Admin', () => {
 })
 
 // Menu PIM
-
 When('acesso a opção PIM pelo menu lateral', () => {
-  MenuLateral.clicarPIM()
+  MenuLateral.acessarOpcao('PIM')
 })
 
 Then('devo visualizar a página PIM', () => {
@@ -35,9 +33,8 @@ Then('devo visualizar a página PIM', () => {
 })
 
 // Menu Leave
-
 When('acesso a opção Leave pelo menu lateral', () => {
-  MenuLateral.clicarLeave()
+  MenuLateral.acessarOpcao('Leave')
 })
 
 Then('devo visualizar a página Leave', () => {
@@ -45,9 +42,8 @@ Then('devo visualizar a página Leave', () => {
 })
 
 // Menu Time
-
 When('acesso a opção Time pelo menu lateral', () => {
-  MenuLateral.clicarTime()
+  MenuLateral.acessarOpcao('Time')
 })
 
 Then('devo visualizar a página Time', () => {
@@ -55,9 +51,8 @@ Then('devo visualizar a página Time', () => {
 })
 
 // Menu Recruitment
-
 When('acesso a opção Recruitment pelo menu lateral', () => {
-  MenuLateral.clicarRecruitment()
+  MenuLateral.acessarOpcao('Recruitment')
 })
 
 Then('devo visualizar a página Recruitment', () => {
@@ -65,9 +60,8 @@ Then('devo visualizar a página Recruitment', () => {
 })
 
 // Menu My Info
-
 When('acesso a opção My Info pelo menu lateral', () => {
-  MenuLateral.clicarMyInfo()
+  MenuLateral.acessarOpcao('My Info')
 })
 
 Then('devo visualizar a página My Info', () => {
@@ -75,9 +69,8 @@ Then('devo visualizar a página My Info', () => {
 })
 
 // Menu Performance
-
 When('acesso a opção Performance pelo menu lateral', () => {
-  MenuLateral.clicarPerformance()
+  MenuLateral.acessarOpcao('Performance')
 })
 
 Then('devo visualizar a página Performance', () => {
@@ -85,9 +78,8 @@ Then('devo visualizar a página Performance', () => {
 })
 
 // Menu Dashboard
-
 When('acesso a opção Dashboard pelo menu lateral', () => {
-  MenuLateral.clicarDashboard()
+  MenuLateral.acessarOpcao('Dashboard')
 })
 
 Then('devo visualizar a página Dashboard', () => {
@@ -95,9 +87,8 @@ Then('devo visualizar a página Dashboard', () => {
 })
 
 // Menu Directory
-
 When('acesso a opção Directory pelo menu lateral', () => {
-  MenuLateral.clicarDirectory()
+  MenuLateral.acessarOpcao('Directory')
 })
 
 Then('devo visualizar a página Directory', () => {
@@ -105,9 +96,8 @@ Then('devo visualizar a página Directory', () => {
 })
 
 // Menu Maintenance
-
 When('acesso a opção Maintenance pelo menu lateral', () => {
-  MenuLateral.clicarMaintenance()
+  MenuLateral.acessarOpcao('Maintenance')
 })
 
 Then('devo visualizar a página Maintenance', () => {
@@ -115,9 +105,8 @@ Then('devo visualizar a página Maintenance', () => {
 })
 
 // Menu Claim
-
 When('acesso a opção Claim pelo menu lateral', () => {
-  MenuLateral.clicarClaim()
+  MenuLateral.acessarOpcao('Claim')
 })
 
 Then('devo visualizar a página Claim', () => {
@@ -125,9 +114,8 @@ Then('devo visualizar a página Claim', () => {
 })
 
 // Menu Buzz
-
 When('acesso a opção Buzz pelo menu lateral', () => {
-  MenuLateral.clicarBuzz()
+  MenuLateral.acessarOpcao('Buzz')
 })
 
 Then('devo visualizar a página Buzz', () => {
