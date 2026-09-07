@@ -20,7 +20,9 @@ class LoginPage {
   }
 
   validarMensagemErro(mensagem) {
-    cy.contains(mensagem).should('be.visible')
+    cy.get('.orangehrm-login-error [role="alert"] .oxd-alert-content-text')
+      .should('be.visible')
+      .and('have.text', mensagem)
   }
 }
 
