@@ -1,50 +1,50 @@
 class MenuLateral {
   clicarAdmin() {
-    cy.contains('a', 'Admin').click()
+    cy.get('.oxd-sidepanel').contains('a', 'Admin').click()
   }
 
   clicarPIM() {
-    cy.contains('a', 'PIM').click()
+    cy.get('.oxd-sidepanel').contains('a', 'PIM').click()
   }
 
   clicarLeave() {
-    cy.contains('a', 'Leave').click()
+    cy.get('.oxd-sidepanel').contains('a', 'Leave').click()
   }
 
   clicarTime() {
-    cy.contains('a', 'Time').click()
+    cy.get('.oxd-sidepanel').contains('a', 'Time').click()
   }
 
   clicarRecruitment() {
-    cy.contains('a', 'Recruitment').click()
+    cy.get('.oxd-sidepanel').contains('a', 'Recruitment').click()
   }
 
   clicarMyInfo() {
-    cy.contains('a', 'My Info').click()
+    cy.get('.oxd-sidepanel').contains('a', 'My Info').click()
   }
 
   clicarPerformance() {
-    cy.contains('a', 'Performance').click()
+    cy.get('.oxd-sidepanel').contains('a', 'Performance').click()
   }
 
   clicarDashboard() {
-    cy.contains('a', 'Dashboard').click()
+    cy.get('.oxd-sidepanel').contains('a', 'Dashboard').click()
   }
 
   clicarDirectory() {
-    cy.contains('a', 'Directory').click()
+    cy.get('.oxd-sidepanel').contains('a', 'Directory').click()
   }
 
   clicarMaintenance() {
-    cy.contains('a', 'Maintenance').click()
+    cy.get('.oxd-sidepanel').contains('a', 'Maintenance').click()
   }
 
   clicarClaim() {
-    cy.contains('a', 'Claim').click()
+    cy.get('.oxd-sidepanel').contains('a', 'Claim').click()
   }
 
   clicarBuzz() {
-    cy.contains('a', 'Buzz').click()
+    cy.get('.oxd-sidepanel').contains('a', 'Buzz').click()
   }
 }
 
