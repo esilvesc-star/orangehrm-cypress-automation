@@ -97,7 +97,9 @@ class PIMPage {
       'be.visible'
     )
 
-    cy.contains(nomeCompleto, { timeout: 15000 }).should('be.visible')
+    cy.get('.orangehrm-edit-employee-name h6', { timeout: 15000 })
+      .should('be.visible')
+      .and('have.text', nomeCompleto)
   }
 
   // ========================================
