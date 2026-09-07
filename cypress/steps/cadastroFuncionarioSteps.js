@@ -1,5 +1,6 @@
 import { When, Then } from '@badeball/cypress-cucumber-preprocessor'
 import PIMPage from '../pages/PIMPage'
+import AddEmployeePage from '../pages/AddEmployeePage'
 
 function gerarEmployeeId() {
   return Date.now().toString(36) + Math.random().toString(36).slice(2, 4)
@@ -14,53 +15,49 @@ before(() => {
   })
 })
 
-// ========================================
 // Navegação
-// ========================================
-
 When('acesso a opção Add Employee', () => {
   PIMPage.clicarAddEmployee()
-  PIMPage.validarPaginaAddEmployee()
+  AddEmployeePage.validarPaginaAddEmployee()
 })
 
 When('acesso a lista de funcionários', () => {
   PIMPage.acessarListaFuncionarios()
 })
 
-// ========================================
 // Cadastro de funcionário
-// ========================================
-
 When('preencho os dados do novo funcionário', () => {
   const { firstName, lastName } = employeeData.funcionarioValido
 
-  PIMPage.preencherDadosFuncionario({ firstName, lastName })
-  PIMPage.preencherEmployeeId(gerarEmployeeId())
+  AddEmployeePage.preencherDadosFuncionario({ firstName, lastName })
+  AddEmployeePage.preencherEmployeeId(gerarEmployeeId())
 })
 
 When('preencho os dados do novo funcionário completo', () => {
-  PIMPage.preencherDadosFuncionario(employeeData.funcionarioValido)
-  PIMPage.preencherEmployeeId(gerarEmployeeId())
+  AddEmployeePage.preencherDadosFuncionario(employeeData.funcionarioValido)
+  AddEmployeePage.preencherEmployeeId(gerarEmployeeId())
 })
 
 When('preencho nome e sobrenome acima do limite permitido', () => {
-  PIMPage.preencherDadosFuncionario(employeeData.funcionarioAcimaDoLimite)
+  AddEmployeePage.preencherDadosFuncionario(
+    employeeData.funcionarioAcimaDoLimite
+  )
 })
 
 When('informo um Employee ID acima do limite permitido', () => {
-  PIMPage.preencherEmployeeIdAcimaDoLimite(
+  AddEmployeePage.preencherEmployeeIdAcimaDoLimite(
     employeeData.idAcimaDoLimite.employeeId
   )
 })
 
 When('armazeno o ID gerado para o funcionário', () => {
-  PIMPage.capturarEmployeeId().then((id) => {
+  AddEmployeePage.capturarEmployeeId().then((id) => {
     employeeId = id
   })
 })
 
 When('clico em salvar o novo funcionário', () => {
-  PIMPage.salvarFuncionarioComSucesso()
+  AddEmployeePage.salvarFuncionarioComSucesso()
 })
 
 Then('devo visualizar o funcionário cadastrado com sucesso', () => {
@@ -69,36 +66,30 @@ Then('devo visualizar o funcionário cadastrado com sucesso', () => {
   PIMPage.validarFuncionarioCadastrado(nomeCompleto)
 })
 
-// ========================================
 // Validações do cadastro
-// ========================================
-
 When('tento salvar o funcionário sem preencher os campos obrigatórios', () => {
-  PIMPage.clicarSalvarFuncionario()
+  AddEmployeePage.clicarSalvarFuncionario()
 })
 
 Then(
   'devo visualizar a obrigatoriedade dos campos First Name e Last Name',
   () => {
-    PIMPage.validarCamposObrigatorios()
+    AddEmployeePage.validarCamposObrigatorios()
   }
 )
 
 Then('devo visualizar a mensagem de limite de 30 caracteres', () => {
-  PIMPage.validarLimiteDeCaracteres()
+  AddEmployeePage.validarLimiteDeCaracteres()
 })
 
 Then(
   'devo visualizar a mensagem de limite de 10 caracteres no Employee ID',
   () => {
-    PIMPage.validarLimiteDeCaracteresEmployeeId()
+    AddEmployeePage.validarLimiteDeCaracteresEmployeeId()
   }
 )
 
-// ========================================
 // Pesquisa de funcionário
-// ========================================
-
 When('pesquiso o funcionário pelo ID gerado', () => {
   PIMPage.pesquisarFuncionarioPorId(employeeId)
 })
