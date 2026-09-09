@@ -1,6 +1,7 @@
 import { When, Then } from '@badeball/cypress-cucumber-preprocessor'
 import PIMPage from '../pages/PIMPage'
 import AddEmployeePage from '../pages/AddEmployeePage'
+import EmployeeListPage from '../pages/EmployeeListPage'
 
 function gerarEmployeeId() {
   return Date.now().toString(36) + Math.random().toString(36).slice(2, 4)
@@ -23,6 +24,7 @@ When('acesso a opção Add Employee', () => {
 
 When('acesso a lista de funcionários', () => {
   PIMPage.acessarListaFuncionarios()
+  EmployeeListPage.validarListaDeFuncionarios()
 })
 
 // Cadastro de funcionário
@@ -91,9 +93,9 @@ Then(
 
 // Pesquisa de funcionário
 When('pesquiso o funcionário pelo ID gerado', () => {
-  PIMPage.pesquisarFuncionarioPorId(employeeId)
+  EmployeeListPage.pesquisarFuncionarioPorId(employeeId)
 })
 
 Then('o funcionário deve ser apresentado na lista de resultados', () => {
-  PIMPage.validarFuncionarioPorId(employeeId)
+  EmployeeListPage.validarFuncionarioPorId(employeeId)
 })
