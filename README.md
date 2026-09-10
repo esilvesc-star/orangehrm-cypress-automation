@@ -3,451 +3,205 @@
 ![Cypress](https://img.shields.io/badge/Cypress-E2E%20Testing-17202C?logo=cypress)
 ![Cucumber](https://img.shields.io/badge/Cucumber-BDD-23D96C?logo=cucumber)
 ![JavaScript](https://img.shields.io/badge/JavaScript-ES6-F7DF1E?logo=javascript&logoColor=black)
+[![Cypress Tests](https://github.com/esilvesc-star/orangehrm-cypress-automation/actions/workflows/cypress-tests.yml/badge.svg)](https://github.com/esilvesc-star/orangehrm-cypress-automation/actions/workflows/cypress-tests.yml)
 
-Framework de automação de testes Web desenvolvido com **Cypress, JavaScript e Cucumber BDD**, utilizando o **OrangeHRM** como aplicação de demonstração.
+Projeto de automação Web desenvolvido com **Cypress, JavaScript e Cucumber**, utilizando o OrangeHRM Demo.
 
-O projeto foi estruturado aplicando conceitos de **Page Object Model (POM)**, componentes reutilizáveis, separação das Step Definitions e gerenciamento de massas de dados através de Fixtures.
+O projeto faz parte de um portfólio de QA e demonstra testes de autenticação, navegação e cadastro de funcionários, com Page Object Model, componentes reutilizáveis e integração contínua no GitHub Actions.
 
----
+## Tecnologias
 
-## 🎯 Principais Recursos
-
-- Cypress para automação Web E2E
-- Cucumber integrado ao Cypress
-- Cenários escritos em Gherkin
-- Page Object Model (POM)
-- Componentes reutilizáveis
-- Steps compartilhados entre diferentes Features
-- Massa de dados utilizando Fixtures JSON
-- Separação entre cenários, regras de negócio e interação com elementos
-- Validações de URL e elementos da interface
-- Execução de testes através de tags
-- Estrutura preparada para evolução da suíte automatizada
-
----
-
-## 🚀 Visão Geral
-
-Este projeto foi desenvolvido com o objetivo de demonstrar uma arquitetura organizada e escalável para automação de testes Web utilizando Cypress.
-
-A estrutura busca separar claramente as responsabilidades do framework, facilitando manutenção, reutilização de código e evolução da suíte de testes.
-
-A aplicação utilizada é o **OrangeHRM Demo**, permitindo automatizar fluxos próximos aos encontrados em sistemas corporativos, como autenticação, navegação entre módulos e cadastro de funcionários.
-
----
-
-## 🛠️ Tecnologias Utilizadas
-
-### Linguagem
-
-- JavaScript
-
-### Automação
-
-- Cypress
-
-### BDD
-
-- Cucumber
-- Gherkin
+- Cypress e JavaScript
+- Cucumber e Gherkin
 - `@badeball/cypress-cucumber-preprocessor`
+- Esbuild
+- Node.js e npm
+- Prettier
+- GitHub Actions
 
-### Arquitetura
+## Cobertura automatizada
 
-- Page Object Model (POM)
-- Components
-- Common Steps
+A suíte contém **20 cenários**:
 
-### Massa de Dados
+| Funcionalidade | Cenários | Cobertura                                                                           |
+| -------------- | -------: | ----------------------------------------------------------------------------------- |
+| Login          |        3 | Credenciais válidas, usuário inválido e senha inválida                              |
+| Menu lateral   |       12 | Navegação e validação das páginas dos módulos                                       |
+| PIM            |        5 | Cadastro, campos obrigatórios, limites de caracteres e cadastro com pesquisa por ID |
 
-- Cypress Fixtures
-- JSON
+Os módulos cobertos pelo menu são: Admin, PIM, Leave, Time, Recruitment, My Info, Performance, Dashboard, Directory, Maintenance, Claim e Buzz.
 
-### Gerenciamento de dependências
+No PIM, são verificados:
 
-- Node.js
-- npm
+- Cadastro com nome e sobrenome.
+- Obrigatoriedade de First Name e Last Name.
+- Limite de 30 caracteres nos campos de nome e sobrenome.
+- Limite de 10 caracteres no Employee ID.
+- Cadastro com nome completo e localização do funcionário pelo ID.
 
----
+## Organização do projeto
 
-## 🏗️ Arquitetura do Framework
+| Diretório ou arquivo                          | Responsabilidade                                           |
+| --------------------------------------------- | ---------------------------------------------------------- |
+| `cypress/e2e/login/login.feature`             | Cenários de autenticação                                   |
+| `cypress/e2e/menu/menu.feature`               | Cenários de navegação                                      |
+| `cypress/e2e/pim/cadastroFuncionario.feature` | Cenários de cadastro e pesquisa                            |
+| `cypress/steps/`                              | Ligação entre os passos Gherkin e as Pages                 |
+| `cypress/pages/`                              | Ações, seletores e validações de cada página               |
+| `cypress/components/MenuLateral.js`           | Navegação reutilizável pelo menu                           |
+| `cypress/fixtures/users.json`                 | Dados dos usuários                                         |
+| `cypress/fixtures/funcionarios.json`          | Dados dos funcionários                                     |
+| `cypress/support/commands.js`                 | Comandos compartilhados, incluindo autenticação com sessão |
+| `cypress/support/e2e.js`                      | Carregamento do suporte aos testes                         |
+| `cypress.config.js`                           | Configuração do Cypress e integração com Cucumber          |
+| `.github/workflows/cypress-tests.yml`         | Pipeline de integração contínua                            |
 
-O projeto utiliza uma arquitetura baseada em separação de responsabilidades:
+### Separação das páginas do PIM
 
-```text
-Feature
-   ↓
-Step Definition
-   ↓
-Page Object / Component
-   ↓
-Cypress
-   ↓
-Aplicação Web
-```
+| Page Object              | Responsabilidade                                     |
+| ------------------------ | ---------------------------------------------------- |
+| `PIMPage.js`             | Validação do módulo e navegação                      |
+| `AddEmployeePage.js`     | Preenchimento, salvamento e validações do formulário |
+| `EmployeeListPage.js`    | Pesquisa e validação dos resultados                  |
+| `PersonalDetailsPage.js` | Validação dos detalhes após o cadastro               |
 
-Cada camada possui uma responsabilidade específica:
+Os Steps ficam em `cadastroFuncionarioSteps.js`, `loginSteps.js`, `menuLateralSteps.js` e `commonSteps.js`.
 
-**Feature**
+## Decisões de implementação
 
-Contém os cenários de negócio escritos em Gherkin.
+### Autenticação com sessão
 
-**Step Definition**
+O step compartilhado `Given que estou logado no sistema` utiliza o comando `cy.loginComSessao()`.
 
-Realiza a ligação entre os passos escritos nas Features e as ações implementadas na automação.
+Esse comando usa `cy.session()` para guardar e restaurar a autenticação nos testes de menu e PIM. A sessão é validada por uma requisição ao Dashboard e pode ser reutilizada entre arquivos durante a mesma execução, na mesma máquina.
 
-**Page Object**
+Após restaurar a sessão, o teste visita o Dashboard. Os cenários específicos de login continuam exercitando o preenchimento e o envio das credenciais.
 
-Centraliza elementos, ações e validações específicas de cada página.
+### Cadastro e massa de dados
 
-**Component**
+As fixtures JSON mantêm os dados separados das ações de interface.
 
-Centraliza comportamentos compartilhados por diferentes páginas, como o menu lateral.
+O método `preencherDadosFuncionario()` recebe um objeto com nome, nome do meio opcional e sobrenome. Os cenários de cadastro geram um Employee ID para reduzir colisões com registros existentes no ambiente público.
 
-**Common Steps**
+O fluxo de sucesso intercepta a requisição de cadastro antes do clique em Save e verifica sua resposta. Os cenários de formulário inválido utilizam somente o clique, seguido da validação da mensagem esperada.
 
-Centraliza Steps reutilizados por diferentes Features, evitando duplicação de Step Definitions.
+Na pesquisa, o ID é comparado exatamente com o conteúdo da coluna correspondente.
 
-**Fixtures**
+### Menu reutilizável
 
-Armazena massas de dados utilizadas durante a execução dos testes.
-
-Essa separação contribui para **reutilização, manutenção e escalabilidade da automação**.
-
----
-
-## 📂 Estrutura do Projeto
-
-```text
-cypress/
-│
-├── components/
-│   └── MenuLateral.js
-│
-├── e2e/
-│   ├── login/
-│   │   └── login.feature
-│   │
-│   ├── menu/
-│   │   └── menu.feature
-│   │
-│   └── pim/
-│       └── CadastroEmployee.feature
-│
-├── fixtures/
-│   ├── users.json
-│   └── cadastroEmployees.json
-│
-├── pages/
-│   ├── AdminPage.js
-│   ├── BuzzPage.js
-│   ├── ClaimPage.js
-│   ├── DashboardPage.js
-│   ├── DirectoryPage.js
-│   ├── LeavePage.js
-│   ├── LoginPage.js
-│   ├── MaintenancePage.js
-│   ├── MyInfoPage.js
-│   ├── PerformancePage.js
-│   ├── PIMPage.js
-│   ├── RecruitmentPage.js
-│   └── TimePage.js
-│
-├── steps/
-│   ├── commonSteps.js
-│   ├── loginSteps.js
-│   ├── menuLateralSteps.js
-│   └── CadastroEmployeeSteps.js
-│
-├── support/
-│   ├── commands.js
-│   └── e2e.js
-│
-└── screenshots/
-
-cypress.config.js
-package.json
-package-lock.json
-```
-
----
-
-## ♻️ Reutilização de Steps
-
-Um dos pontos da arquitetura é a utilização de **Steps compartilhados**.
-
-Por exemplo, diferentes funcionalidades precisam iniciar com o usuário autenticado:
-
-```gherkin
-Given que estou logado no sistema
-```
-
-Em vez de duplicar essa implementação em diferentes arquivos de Steps, o comportamento é centralizado no:
-
-```text
-commonSteps.js
-```
-
-Isso evita definições duplicadas no Cucumber e melhora a reutilização do código.
-
----
-
-## 🧩 Componentização
-
-Elementos compartilhados por várias funcionalidades são tratados como componentes.
-
-O menu lateral do OrangeHRM, por exemplo, está centralizado em:
-
-```text
-components/MenuLateral.js
-```
-
-Dessa forma, operações como:
-
-```text
-Admin
-PIM
-Leave
-Time
-Recruitment
-My Info
-Performance
-Dashboard
-Directory
-Maintenance
-Claim
-Buzz
-```
-
-podem ser reutilizadas por diferentes cenários sem duplicar os seletores e comportamentos de navegação.
-
----
-
-## 💾 Gerenciamento de Massa de Dados
-
-Os dados utilizados pelos testes são mantidos separados da implementação através de **Fixtures JSON**.
+O componente `MenuLateral` concentra a navegação no método `acessarOpcao(opcao)`, restringindo a busca ao painel lateral.
 
 Exemplo:
 
-```text
-cypress/fixtures/users.json
-cypress/fixtures/cadastroEmployees.json
-```
-
-Os dados são carregados utilizando:
-
 ```javascript
-cy.fixture('users')
+MenuLateral.acessarOpcao('PIM')
 ```
 
-Essa abordagem evita dados de teste espalhados pelas Step Definitions e facilita sua manutenção.
-
----
-
-## ✅ Cenários Automatizados
-
-### 🔐 Login
-
-- Login com sucesso
-- Login com usuário inválido
-- Login com senha inválida
-- Validação de acesso ao Dashboard após autenticação
-
-### 🧭 Menu Lateral
-
-Validação da navegação para os módulos:
-
-- Admin
-- PIM
-- Leave
-- Time
-- Recruitment
-- My Info
-- Performance
-- Dashboard
-- Directory
-- Maintenance
-- Claim
-- Buzz
-
-### 👤 PIM — Cadastro de Funcionário
-
-Fluxo automatizado:
-
-```text
-Login
-  ↓
-Acesso ao PIM
-  ↓
-Add Employee
-  ↓
-Preenchimento dos dados
-  ↓
-Salvamento
-  ↓
-Validação do funcionário cadastrado
-```
-
-O cenário valida o cadastro de um novo funcionário utilizando massa de dados externa através de Fixture.
-
----
-
-## 📝 Exemplo de Cenário BDD
-
-```gherkin
-Feature: Cadastro de funcionário
-
-  @regression
-  Scenario: Cadastrar um novo funcionário com sucesso
-    Given que estou logado no sistema
-    And acesso a opção PIM pelo menu lateral
-    And acesso a opção Add Employee
-    When preencho os dados do novo funcionário
-    And clico em salvar o novo funcionário
-    Then devo visualizar o funcionário cadastrado com sucesso
-```
-
-A utilização de Gherkin mantém os cenários legíveis e aproxima a documentação do comportamento esperado da aplicação.
-
----
-
-## ▶️ Como Executar
+## Como executar
 
 ### Pré-requisitos
 
-Antes de executar o projeto é necessário possuir:
-
-- Node.js
+- Node.js 22, utilizado na pipeline
 - npm
 - Git
+- Acesso à internet para acessar o OrangeHRM Demo
 
----
-
-### Clonar o projeto
-
-```bash
-git clone URL_DO_REPOSITORIO
-```
-
-Acesse o diretório:
+### Instalação
 
 ```bash
-cd NOME_DO_REPOSITORIO
+git clone https://github.com/esilvesc-star/orangehrm-cypress-automation.git
+cd orangehrm-cypress-automation
+npm ci
 ```
 
----
+### Comandos disponíveis
 
-### Instalar as dependências
+| Comando                   | Finalidade                                  |
+| ------------------------- | ------------------------------------------- |
+| `npm run cy:open`         | Abrir a interface do Cypress                |
+| `npm test`                | Executar toda a suíte em modo headless      |
+| `npm run test:smoke`      | Executar os cenários com `@smoke`           |
+| `npm run test:regression` | Executar os cenários com `@regression`      |
+| `npm run test:login`      | Executar os cenários de login               |
+| `npm run test:menu`       | Executar os cenários do menu                |
+| `npm run test:pim`        | Executar os cenários do PIM                 |
+| `npm run format`          | Aplicar a formatação do Prettier            |
+| `npm run format:check`    | Verificar a formatação sem alterar arquivos |
+
+### Filtros por tags
+
+Os comandos abaixo utilizam a opção `--expose`, adotada na configuração atual do projeto.
+
+Executar o cenário marcado como E2E:
 
 ```bash
-npm install
+npm test -- --expose tags=@e2e
 ```
 
----
-
-### Abrir o Cypress
+Executar menu e PIM:
 
 ```bash
-npx cypress open
+npm test -- --expose "tags=@menu or @pim"
 ```
 
-Após abrir o Cypress:
-
-```text
-E2E Testing
-   ↓
-Selecionar navegador
-   ↓
-Selecionar a Feature
-```
-
----
-
-### Executar em modo Headless
+Executar uma Feature:
 
 ```bash
-npx cypress run
+npm test -- --spec "cypress/e2e/pim/cadastroFuncionario.feature"
 ```
 
----
+Em execuções filtradas, cenários não selecionados podem aparecer como `Pending`. Isso não representa uma falha de execução.
 
-## 🏷️ Execução por Tags
+## Integração contínua
 
-Os cenários podem ser classificados através de tags do Cucumber.
+O workflow `Cypress Tests` é executado:
 
-Exemplo:
+- Em pushes para `main`.
+- Em pull requests destinados à `main`.
+- Manualmente pela aba Actions, na opção **Run workflow**.
 
-```gherkin
-@regression
-Scenario: Acessar a página PIM pelo menu lateral
+A pipeline:
+
+1. Obtém o código do repositório.
+2. Configura o Node.js 22 e o cache do npm.
+3. Instala as dependências com `npm ci`.
+4. Verifica a formatação com `npm run format:check`.
+5. Executa a suíte com `npm test`.
+6. Publica as evidências disponíveis.
+
+O job possui limite de 20 minutos. Erros de formatação ou falhas nos testes fazem a execução falhar.
+
+## Evidências
+
+Durante a execução em modo headless:
+
+- Vídeos são gerados em `cypress/videos/`.
+- Screenshots de falhas são gerados em `cypress/screenshots/`.
+
+No GitHub Actions, o workflow tenta publicar esses arquivos mesmo quando uma etapa falha. Quando disponíveis, ficam no artefato **`cypress-evidencias`**, com retenção de 7 dias.
+
+Para acessar, abra **Actions → execução desejada → Artifacts**.
+
+## Formatação
+
+O Prettier mantém o padrão de código do projeto:
+
+- Sem ponto e vírgula.
+- Aspas simples.
+- Indentação de dois espaços.
+- Sem vírgulas finais.
+
+Antes de enviar alterações:
+
+```bash
+npm run format
+npm run format:check
 ```
 
-Para desenvolvimento e depuração de um cenário específico, o projeto também pode utilizar temporariamente:
+## Ambiente de demonstração
 
-```gherkin
-@only
-```
+Aplicação: [OrangeHRM Demo](https://opensource-demo.orangehrmlive.com/).
 
-Isso facilita trabalhar isoladamente em um cenário durante sua implementação.
+Por ser um ambiente público compartilhado, os dados e a disponibilidade podem variar. Falhas devem ser analisadas com base nas mensagens, nas respostas das requisições e nas evidências geradas.
 
----
-
-## 🔄 Fluxo da Automação
-
-Um fluxo típico executado pelo framework é:
-
-```text
-Feature (.feature)
-      ↓
-Step Definition
-      ↓
-Page Object / Component
-      ↓
-Comandos Cypress
-      ↓
-OrangeHRM
-      ↓
-Validação
-```
-
-Essa organização evita concentrar regras de negócio, seletores e comandos Cypress no mesmo arquivo.
-
----
-
-## 🎯 Boas Práticas Aplicadas
-
-O projeto procura aplicar práticas importantes para manutenção de automação:
-
-- Separação de responsabilidades
-- Page Object Model
-- Reutilização de componentes
-- Steps compartilhados
-- Massa de dados externa
-- Cenários BDD legíveis
-- Evitar duplicação de Step Definitions
-- Seletores centralizados
-- Validações explícitas
-- Organização por funcionalidade
-- Utilização de tags para classificação dos testes
-
----
-
-## 🌐 Aplicação de Testes
-
-Os testes utilizam a aplicação pública de demonstração:
-
-**OrangeHRM Demo**
-
-https://opensource-demo.orangehrmlive.com/
-
-> A aplicação é utilizada exclusivamente como ambiente público para demonstração das técnicas de automação implementadas neste projeto.
-
----
-
-## 📌 Objetivo do Projeto
-
-Este projeto faz parte de um portfólio de automação de testes e tem como objetivo demonstrar conhecimentos em:
-
-**Cypress • JavaScript • Cucumber • BDD • Gherkin • Page Object Model • Fixtures • Componentização • Automação E2E**
-
-A arquitetura foi estruturada pensando em legibilidade, manutenção, reutilização e crescimento da suíte automatizada.
+A aprovação da suíte representa o resultado daquela execução e dos cenários cobertos.
