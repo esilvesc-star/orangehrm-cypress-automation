@@ -2,6 +2,7 @@ import { When, Then } from '@badeball/cypress-cucumber-preprocessor'
 import PIMPage from '../pages/PIMPage'
 import AddEmployeePage from '../pages/AddEmployeePage'
 import EmployeeListPage from '../pages/EmployeeListPage'
+import PersonalDetailsPage from '../pages/PersonalDetailsPage'
 
 function gerarEmployeeId() {
   return Date.now().toString(36) + Math.random().toString(36).slice(2, 4)
@@ -65,7 +66,7 @@ When('clico em salvar o novo funcionário', () => {
 Then('devo visualizar o funcionário cadastrado com sucesso', () => {
   const nomeCompleto = `${employeeData.funcionarioValido.firstName} ${employeeData.funcionarioValido.lastName}`
 
-  PIMPage.validarFuncionarioCadastrado(nomeCompleto)
+  PersonalDetailsPage.validarFuncionarioCadastrado(nomeCompleto)
 })
 
 // Validações do cadastro
